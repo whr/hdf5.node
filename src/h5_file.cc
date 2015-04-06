@@ -17,7 +17,7 @@ namespace NodeHDF5 {
     using namespace v8;
     
     File::File (const char* path) {
-        
+		InitMap();
         bool exists=std::ifstream(path).good();
         m_file = new H5::H5File(path, H5F_ACC_RDONLY);
         gcpl = H5Pcreate(H5P_GROUP_CREATE);
@@ -38,6 +38,7 @@ namespace NodeHDF5 {
     }
     
     File::File (const char* path, unsigned long flags) {
+		InitMap();
         bool exists=std::ifstream(path).good();
         //bool exists=std::experimental::filesystem::exists(path);
         m_file = new H5::H5File(path, toAccessMap[flags]);

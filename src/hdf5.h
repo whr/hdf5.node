@@ -28,8 +28,12 @@ enum HLType {
 
     class File : public ObjectWrap {
     protected:
-            std::map<unsigned long, unsigned long> toAccessMap = {{0,H5F_ACC_RDONLY}, {1,H5F_ACC_RDWR}, {2,H5F_ACC_TRUNC}, {3,H5F_ACC_EXCL}, {4,H5F_ACC_DEBUG}, {5,H5F_ACC_CREAT}};
+			std::map<unsigned long, unsigned long> toAccessMap;
             hid_t plist_id, gcpl, dtpl_id, dapl_id, dcpl_id;
+			void InitMap()
+			{
+				toAccessMap = std::map<unsigned long, unsigned long> { { 0, H5F_ACC_RDONLY }, { 1, H5F_ACC_RDWR }, { 2, H5F_ACC_TRUNC }, { 3, H5F_ACC_EXCL }, { 4, H5F_ACC_DEBUG }, { 5, H5F_ACC_CREAT } };
+			}
 
         public:
             static void Initialize (Handle<Object> target);

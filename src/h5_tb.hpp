@@ -28,7 +28,8 @@ namespace NodeHDF5 {
         {
             String::Utf8Value table_name (args[1]->ToString());
             Local<v8::Array> table=Local<v8::Array>::Cast(args[2]);
-            char* field_names[table->Length()];
+	
+			char** field_names = (char**)alloca(sizeof(char*) * (size_t)table->Length());
 //            char** field_names= (char**) HDmalloc( sizeof(char*) * (size_t)nfields );
             for (unsigned int i = 0; i < table->Length(); i++)
             {
@@ -159,7 +160,8 @@ namespace NodeHDF5 {
                 args.GetReturnValue().SetUndefined();
                 return;
             }
-            char* field_names[nfields];
+            //char* field_names[nfields];
+			char** field_names = (char**)alloca(sizeof(char*) * (size_t)nfields);
 //            char** field_names= (char**) HDmalloc( sizeof(char*) * (size_t)nfields );
             for (unsigned int i = 0; i < nfields; i++)
             {

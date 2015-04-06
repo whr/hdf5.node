@@ -95,7 +95,7 @@ static void make_dataset (const v8::FunctionCallbackInfo<Value>& args)
             rank=rankValue->ToInt32()->Value();
     //        std::cout<<"has rank "<<rank<<std::endl;
         }
-        hsize_t dims[rank];
+		hsize_t* dims = (hsize_t*)alloca(sizeof(hsize_t) * (size_t)rank);
         switch(rank)
         {
             case 1:
@@ -365,7 +365,8 @@ static void read_dataset (const v8::FunctionCallbackInfo<Value>& args)
         args.GetReturnValue().SetUndefined();
         return;
     }
-    hsize_t values_dim[rank];
+   
+	hsize_t* values_dim = (hsize_t*)alloca(sizeof(hsize_t) * (size_t)rank);
     err=H5LTget_dataset_info(args[0]->ToInt32()->Value(), *dset_name, values_dim, &class_id, &bufSize);
     if(err<0)
     {
@@ -567,7 +568,8 @@ static void readDatasetAsBuffer (const v8::FunctionCallbackInfo<Value>& args)
         args.GetReturnValue().SetUndefined();
         return;
     }
-    hsize_t values_dim[rank];
+    
+	hsize_t* values_dim = (hsize_t*)alloca(sizeof(hsize_t) * (size_t)rank);
     err=H5LTget_dataset_info(args[0]->ToInt32()->Value(), *dset_name, values_dim, &class_id, &bufSize);
     if(err<0)
     {
